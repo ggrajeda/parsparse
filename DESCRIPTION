@@ -1,0 +1,17 @@
+Package: parsparse
+Type: Package
+Title: Load BioConductor SparseArrays Efficiently
+Version: 1.0
+Date: 2024-08-07
+Author: Gabriel Grajeda
+Maintainer: Gabriel Grajeda <gabriel@ds.dfci.harvard.edu>
+Description: Construct BioConductor SparseArrays efficiently from various file
+    formats (.mtx, .csv, and .hdf5), without creating any intermediate dense
+    matrices.
+License: GPL (>= 2)
+biocViews:
+Imports: 
+    Rcpp (>= 1.0.13),
+    SparseArray
+LinkingTo: Rcpp
+RoxygenNote: 7.3.2
