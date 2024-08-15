@@ -1,14 +1,12 @@
 #ifndef SMALLCOUNT_MTX_FILE_READER_H_
 #define SMALLCOUNT_MTX_FILE_READER_H_
 
-#include <Rcpp.h>
-
+#include <fstream>
+#include <optional>
 #include <string>
 
 #include "mtx_file.h"
 #include "sparse_matrix.h"
-
-using namespace Rcpp;
 
 namespace smallcount {
 
@@ -26,7 +24,7 @@ class MtxFileReader {
     int line_num = 0;   // Line number in the file
     int non_zero_count = 0;  // Count of non-zero entries in the matrix
 
-    // Static class. Should not be instantiated.
+    // Static class. Should not be instantiated externally.
     MtxFileReader() = default;
 
     // Reads a line of an .mtx file.

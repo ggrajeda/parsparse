@@ -1,9 +1,9 @@
 #include "sparse_matrix.h"
 
-#include <Rcpp.h>
-
 #include <memory>
 #include <string>
+
+#include "Rcpp.h"
 
 using namespace Rcpp;
 

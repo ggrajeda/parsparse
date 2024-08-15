@@ -1,11 +1,11 @@
 #ifndef SMALLCOUNT_SPARSE_MATRIX_H_
 #define SMALLCOUNT_SPARSE_MATRIX_H_
 
-#include <Rcpp.h>
-
 #include <memory>
 #include <string>
 #include <vector>
+
+#include "Rcpp.h"
 
 using namespace Rcpp;
 
