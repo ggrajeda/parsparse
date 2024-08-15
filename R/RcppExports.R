@@ -5,11 +5,7 @@ getWorkingDirectory <- function() {
     .Call(`_parsparse_getWorkingDirectory`)
 }
 
-readCooFromMtx <- function(filepath) {
-    .Call(`_parsparse_readCooFromMtx`, filepath)
-}
-
-readSvtFromMtx <- function(filepath) {
-    .Call(`_parsparse_readSvtFromMtx`, filepath)
+readSparseMatrix <- function(filepath, rep) {
+    .Call(`_parsparse_readSparseMatrix`, filepath, rep)
 }
 

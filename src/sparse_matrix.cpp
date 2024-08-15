@@ -2,6 +2,9 @@
 
 #include <Rcpp.h>
 
+#include <memory>
+#include <string>
+
 using namespace Rcpp;
 
 namespace smallcount {
@@ -21,6 +24,12 @@ static constexpr int kValIndex = 1;  // Index of value information in SVT entry
 static constexpr char kDim[] = "dim";
 
 }  // namespace
+
+std::unique_ptr<SparseMatrix> SparseMatrix::create(const std::string &rep) {
+    if (rep == kCooRep) return std::make_unique<CooSparseMatrix>();
+    if (rep == kSvtRep) return std::make_unique<SvtSparseMatrix>();
+    return nullptr;
+}
 
 // -----------------------------------------------------------------------------
 // COO Sparse Matrix

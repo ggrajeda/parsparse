@@ -4,8 +4,10 @@
 #include <Rcpp.h>
 
 #include <fstream>
+#include <memory>
 #include <string>
 
+#include "mtx_file_reader.h"
 #include "sparse_matrix.h"
 
 using namespace Rcpp;
@@ -15,22 +17,24 @@ namespace smallcount {
 // Abstract class to parse a sparse matrix from a file.
 class SparseMatrixFileReader {
    public:
-    // Reads a sparse matrix of type M from a file.
-    template <typename M>
-    SEXP readMatrix(const std::string &filepath) {
-        M matrix;
+    // Reads a sparse matrix from a file using the internal representation
+    // specified (either "coo" or "svt").
+    static SEXP read(const std::string &filepath, const std::string &rep) {
+        std::unique_ptr<SparseMatrix> matrix = SparseMatrix::create(rep);
+        if (matrix == nullptr) {
+            stop(
+                "Invalid matrix representation specified: \"%s\". Only \"coo\" "
+                "and \"svt\" supported.",
+                rep);
+        }
         std::ifstream file(filepath);
         if (!file.is_open()) {
-            return matrix.toRcpp();
+            return matrix->toRcpp();
         }
-        parseFile(file, matrix);
+        MtxFileReader::read(file, *matrix);
         file.close();
-        return matrix.toRcpp();
+        return matrix->toRcpp();
     }
-
-   protected:
-    // Reads the contents of a file into a SparseMatrix object.
-    virtual void parseFile(std::ifstream &file, SparseMatrix &matrix) = 0;
 };
 
 }  // namespace smallcount

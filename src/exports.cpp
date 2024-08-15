@@ -3,7 +3,7 @@
 #include <filesystem>
 #include <string>
 
-#include "mtx_file_reader.h"
+#include "file_reader.h"
 
 using namespace Rcpp;
 
@@ -14,14 +14,9 @@ CharacterVector getWorkingDirectory() {
     return CharacterVector(std::filesystem::current_path());
 }
 
-// Reads a COO_SparseMatrix object from an .mtx file.
+// Reads a SparseMatrix R object from a file using the internal representation
+// specified (either "coo" or "svt").
 // [[Rcpp::export]]
-SEXP readCooFromMtx(std::string filepath) {
-    return smallcount::MtxFileReader::readCooSparseMatrix(filepath);
-}
-
-// Reads an SVT_SparseMatrix object from an .mtx file.
-// [[Rcpp::export]]
-SEXP readSvtFromMtx(std::string filepath) {
-    return smallcount::MtxFileReader::readSvtSparseMatrix(filepath);
+SEXP readSparseMatrix(std::string filepath, std::string rep) {
+    return smallcount::SparseMatrixFileReader::read(filepath, rep);
 }

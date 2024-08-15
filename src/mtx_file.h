@@ -17,7 +17,6 @@ struct MtxLine {
     int val;
 
     MatrixData data() { return {.row = row, .col = col, .val = val}; }
-
     MatrixMetadata metadata() {
         return {.nrow = row, .ncol = col, .nval = val};
     }

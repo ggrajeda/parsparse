@@ -20,33 +20,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// readCooFromMtx
-SEXP readCooFromMtx(std::string filepath);
-RcppExport SEXP _parsparse_readCooFromMtx(SEXP filepathSEXP) {
+// readSparseMatrix
+SEXP readSparseMatrix(std::string filepath, std::string rep);
+RcppExport SEXP _parsparse_readSparseMatrix(SEXP filepathSEXP, SEXP repSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< std::string >::type filepath(filepathSEXP);
-    rcpp_result_gen = Rcpp::wrap(readCooFromMtx(filepath));
-    return rcpp_result_gen;
-END_RCPP
-}
-// readSvtFromMtx
-SEXP readSvtFromMtx(std::string filepath);
-RcppExport SEXP _parsparse_readSvtFromMtx(SEXP filepathSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string >::type filepath(filepathSEXP);
-    rcpp_result_gen = Rcpp::wrap(readSvtFromMtx(filepath));
+    Rcpp::traits::input_parameter< std::string >::type rep(repSEXP);
+    rcpp_result_gen = Rcpp::wrap(readSparseMatrix(filepath, rep));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_parsparse_getWorkingDirectory", (DL_FUNC) &_parsparse_getWorkingDirectory, 0},
-    {"_parsparse_readCooFromMtx", (DL_FUNC) &_parsparse_readCooFromMtx, 1},
-    {"_parsparse_readSvtFromMtx", (DL_FUNC) &_parsparse_readSvtFromMtx, 1},
+    {"_parsparse_readSparseMatrix", (DL_FUNC) &_parsparse_readSparseMatrix, 2},
     {NULL, NULL, 0}
 };
 

@@ -5,7 +5,6 @@
 
 #include <string>
 
-#include "file_reader.h"
 #include "mtx_file.h"
 #include "sparse_matrix.h"
 
@@ -14,16 +13,12 @@ using namespace Rcpp;
 namespace smallcount {
 
 // File reader to construct sparse matrices from .mtx files.
-class MtxFileReader : public SparseMatrixFileReader {
+class MtxFileReader {
    public:
-    static SEXP readCooSparseMatrix(const std::string &filepath) {
+    // Reads the contents of an .mtx file into a SparseMatrix object.
+    static void read(std::ifstream &file, SparseMatrix &matrix) {
         MtxFileReader reader;
-        return reader.readMatrix<CooSparseMatrix>(filepath);
-    }
-
-    static SEXP readSvtSparseMatrix(const std::string &filepath) {
-        MtxFileReader reader;
-        return reader.readMatrix<SvtSparseMatrix>(filepath);
+        reader.parseFile(file, matrix);
     }
 
    private:
@@ -37,8 +32,7 @@ class MtxFileReader : public SparseMatrixFileReader {
     // Reads a line of an .mtx file.
     std::optional<MtxLine> parseMtxLine(const std::string &line);
 
-    // Reads the contents of an .mtx file into a SparseMatrix object.
-    void parseFile(std::ifstream &file, SparseMatrix &matrix) override;
+    void parseFile(std::ifstream &file, SparseMatrix &matrix);
 };
 
 }  // namespace smallcount

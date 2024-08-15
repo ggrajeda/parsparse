@@ -3,11 +3,16 @@
 
 #include <Rcpp.h>
 
+#include <memory>
+#include <string>
 #include <vector>
 
 using namespace Rcpp;
 
 namespace smallcount {
+
+static constexpr char kCooRep[] = "coo";
+static constexpr char kSvtRep[] = "svt";
 
 // Pair of parallel arrays containing the row and value, respectively, of each
 // non-zero entry in a given column.
@@ -39,12 +44,18 @@ struct SparseMatrix {
     int ncol() const { return metadata.ncol; }
     int nval() const { return metadata.nval; }
 
+    virtual ~SparseMatrix() = default;
+
     // Updates the matrix with the given metadata.
     virtual void updateMetadata(const MatrixMetadata &metadata) = 0;
     // Adds a non-zero data entry to the matrix.
     virtual void addEntry(const MatrixData &entry) = 0;
     // Consumes the matrix and converts it to an S4 object.
     virtual SEXP toRcpp() = 0;
+
+    // Returns a sparse matrix with the specified internal representation.
+    // Only "coo" and "svt" are currently supported.
+    static std::unique_ptr<SparseMatrix> create(const std::string &rep);
 };
 
 // COO representation of a sparse matrix.
